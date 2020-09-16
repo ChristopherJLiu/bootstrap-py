@@ -7,6 +7,8 @@ ENV SERVICE_NAME=bootstrap-py \
     SERVICE_CHECK_INTERVAL=10s \
     SERVICE_CHECK_TIMEOUT=2s \
     SERVICE_WEATHERAPI_CONFIG='[{"type":"owm","owm_list":[{"domain": "https://api.openweathermap.org", "path":"/data/2.5/weather", "args":"?id=2267057&units=metric&appid=244df0cbb2bcae2bca2fbe929ae3a613","key":"244df0cbb2bcae2bca2fbe929ae3a613", "unit":"metric"}]}]' \
+    API_IP='0.0.0.0' \
+    API_PORT='5656' \
     NODE_ENV=dev
 
 RUN apt-get update \
