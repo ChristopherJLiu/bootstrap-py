@@ -1,6 +1,7 @@
 # BOOTSTRAP-PY #
 
 Simple Rest API contained using docker.
+Checks if the requested data is in cache and return the data, if not makes a request to OpenWeather and stores in cache and returns the data.
 
 
 ### Executing
