@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+    bootstrap-py:
+        volumes:
+            - ../app:/app
+        build:
+            context: ..
+        image: local/test/bootstrap-py
+        command: >
+            /bin/bash -c "cd /app/
+            && python -m unittest tests/test_*
+            "

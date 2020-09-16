@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+    bootstrap-py:
+        volumes:
+            - ./app:/app
+        build: .
+        ports:
+            - "5656:5656"
+        image: local/bootstrap-py
+        command:  python do.py
