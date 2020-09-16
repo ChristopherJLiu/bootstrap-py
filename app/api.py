@@ -5,8 +5,6 @@ from os import path
 import requests
 
 API_INFO=None
-IP = '0.0.0.0'
-PORT = 5656
 
 #Defining a API config storage class
 class ApiConfig:
@@ -42,7 +40,7 @@ class ServiceHandler(BaseHTTPRequestHandler):
 def init():
 	print("\napi - init\n")
 	load_config()
-	server = HTTPServer((IP, PORT), ServiceHandler)
+	server = HTTPServer((os.environ.get('API_IP'), int(os.environ.get('API_PORT'))), ServiceHandler)
 	try:
 		server.serve_forever()
 	finally:
