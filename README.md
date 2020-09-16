@@ -1,6 +1,6 @@
 # BOOTSTRAP-PY #
 
-Boostrap development project for container Cloud services built in Python.
+Simple Rest API contained in docker.
 
 
 ### Executing
