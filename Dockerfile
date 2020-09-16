@@ -2,7 +2,7 @@ FROM python:3.7.6-buster
 
 ENV SERVICE_NAME=bootstrap-py \
     SERVICE_DESC='Boostrap project for Python based services' \
-    SERVICE_TAGS='local,local-test,sens8,sensefinity-bootstrap-py,bootstrap-py' \
+    SERVICE_TAGS='local,local-test,bootstrap-py' \
     SERVICE_CHECK_ENDPOINT='/' \
     SERVICE_CHECK_INTERVAL=10s \
     SERVICE_CHECK_TIMEOUT=2s \
