@@ -12,7 +12,7 @@ docker-compose up --build
 After the API is running to get weather of a city do:
 http://localhost:5656/weather/city/3448433 which will request São Paulo Brazil weather (3448433 number is dynamic)
 
-To get another cities go to : https://openweathermap.org/ and search a city and copy the city id
+To get another cities go to : https://openweathermap.org/ search for a city and copy the city id
 
 
 ### Developing
