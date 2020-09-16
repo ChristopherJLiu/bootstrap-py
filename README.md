@@ -1,6 +1,6 @@
 # BOOTSTRAP-PY #
 
-Simple Rest API contained in docker.
+Simple Rest API contained using docker.
 
 
 ### Executing
