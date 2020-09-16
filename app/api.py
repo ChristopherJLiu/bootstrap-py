@@ -33,8 +33,8 @@ class ServiceHandler(BaseHTTPRequestHandler):
 		path = self.path.split("/")
 		city_id = path[3]
 		#get the requested info
-		weatherInfo = get_weather(city_id)
-		self.wfile.write(json.dumps(weatherInfo).encode())
+		weather_info = get_weather(city_id)
+		self.wfile.write(json.dumps(weather_info).encode())
 
 
 
