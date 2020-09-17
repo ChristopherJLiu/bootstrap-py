@@ -3,10 +3,8 @@ import json
 import os 
 from os import path
 import requests
-import redis
 
-API_INFO = None
-CACHE_DB = None
+API_INFO=None
 
 #Defining a API config storage class
 class ApiConfig:
@@ -33,15 +31,15 @@ class ServiceHandler(BaseHTTPRequestHandler):
 		path = self.path.split("/")
 		city_id = path[3]
 		#get the requested info
-		weatherInfo = get_weather(city_id)
-		self.wfile.write(json.dumps(weatherInfo).encode())
+		weather_info = get_weather(city_id)
+		self.wfile.write(json.dumps(weather_info).encode())
 
 
 
 #Initializes Api config data and server
 def init():
 	print("\napi - init\n")
-	load_config()	
+	load_config()
 	server = HTTPServer((os.environ.get('API_IP'), int(os.environ.get('API_PORT'))), ServiceHandler)
 	try:
 		server.serve_forever()
@@ -50,29 +48,35 @@ def init():
 
 
 
-#Loads API variables and connect to redis
+#Loads API variables
 def load_config():
 	global API_INFO
-	global CACHE_DB
 	API_INFO = ApiConfig('SERVICE_WEATHERAPI_CONFIG')
-	CACHE_DB = redis.StrictRedis(os.environ.get('REDIS_IP'), int(os.environ.get('REDIS_PORT')))
 
 
 
 #Gets the weather info from the cache if exists else makes request
 def get_weather(city_id):
-	if(CACHE_DB.execute_command('EXISTS', city_id) == 1):
-		data = json.loads(CACHE_DB.execute_command('JSON.GET', city_id))
-		return data
-	return request_and_store(city_id)			
+	if path.exists("cache/" + city_id + ".json"):
+		with open("cache/" + city_id + ".json") as file:
+			data = json.load(file)
+			#Check if city exists
+			if(data['cod'] != "404"):
+				print_info(data)
+		return data			
+	return request_and_store(city_id)
 
 
 
-#Makes request to OpenWeather and stores in cache
+#Makes request to OpenWeather and creates a new json in cache
 def request_and_store(city_id):
 	response = requests.get(API_INFO.domain + API_INFO.path, headers = {"Accept": "application/json"}, params = {"id": city_id, "units": API_INFO.unit, "appid": API_INFO.api_key})
-	data = response.json()
-	CACHE_DB.execute_command('JSON.SET', city_id, '.', json.dumps(data))
+	with open("cache/" + city_id + ".json", "w") as file:
+		data = response.json()
+		#Check if city exists
+		if(data['cod'] != "404"):
+			print_info(data)
+		json.dump(data, file)
 	return data
 
 

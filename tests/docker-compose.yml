@@ -10,7 +10,3 @@ services:
             /bin/bash -c "cd /app/
             && python -m unittest tests/test_*
             "
-    redis:
-        ports:
-            - 6379:6379
-        image: redislabs/rejson:latest

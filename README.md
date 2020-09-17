@@ -1,9 +1,8 @@
 # BOOTSTRAP-PY #
 
-Simple Rest API using Redis as cache and contained using Docker.
+Simple Rest API contained using docker.
 Checks if the requested data is in cache and return the data, if not makes a request to OpenWeather and stores in cache and returns the data.
 
-Its the same as master branch only difference that is this cache is made using Redis instead of storing a JSON file
 
 ### Executing
 
@@ -41,9 +40,6 @@ docker-compose -f tests/docker-compose.yml up --build
 Project is using unittest from Python
 
 Check for assert methods here https://docs.python.org/3/library/unittest.html#assert-methods
-
-
-
 
 
 
