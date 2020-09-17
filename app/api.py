@@ -28,8 +28,8 @@ class ServiceHandler(BaseHTTPRequestHandler):
 		self.send_header('Content-Type', 'application/json')
 		self.end_headers()
 		#splits the given path to get the id
-		path = self.path.split("/")
-		city_id = path[3]
+		url_path = self.path.split("/")
+		city_id = url_path[3]
 		#get the requested info
 		weather_info = get_weather(city_id)
 		self.wfile.write(json.dumps(weather_info).encode())
@@ -57,14 +57,22 @@ def load_config():
 
 #Gets the weather info from the cache if exists else makes request
 def get_weather(city_id):
-	if path.exists("cache/" + city_id + ".json"):
-		with open("cache/" + city_id + ".json") as file:
+	data = get_cache("cache/" + city_id + ".json")
+	if data == 0:
+		return request_and_store(city_id)
+	return data
+
+
+#Checks cache for a file if existis returns the file content otherwise returns 0
+def get_cache(file_dir):
+	if path.exists(file_dir):
+		with open(file_dir) as file:
 			data = json.load(file)
-			#Check if city exists
 			if(data['cod'] != "404"):
 				print_info(data)
-		return data			
-	return request_and_store(city_id)
+		return data
+	return 0
+
 
 
 
