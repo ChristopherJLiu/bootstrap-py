@@ -30,8 +30,8 @@ class ServiceHandler(BaseHTTPRequestHandler):
 		self.send_header('Content-Type', 'application/json')
 		self.end_headers()
 		#splits the given path to get the id
-		path = self.path.split("/")
-		city_id = path[3]
+		url_path = self.path.split("/")
+		city_id = url_path[3]
 		#get the requested info
 		weatherInfo = get_weather(city_id)
 		self.wfile.write(json.dumps(weatherInfo).encode())
@@ -61,10 +61,18 @@ def load_config():
 
 #Gets the weather info from the cache if exists else makes request
 def get_weather(city_id):
-	if(CACHE_DB.execute_command('EXISTS', city_id) == 1):
-		data = json.loads(CACHE_DB.execute_command('JSON.GET', city_id))
+	data = get_cached(city_id)
+	if data == 0 :
+		return request_and_store(city_id)
+	return data
+
+
+#Checks cache for they key if existis returns the content otherwise returns 0
+def get_cached(key):
+	if(CACHE_DB.execute_command('EXISTS', key) == 1):
+		data = json.loads(CACHE_DB.execute_command('JSON.GET', key))
 		return data
-	return request_and_store(city_id)			
+	return 0			
 
 
 
