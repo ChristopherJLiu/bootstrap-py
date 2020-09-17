@@ -73,6 +73,7 @@ def request_and_store(city_id):
 	response = requests.get(API_INFO.domain + API_INFO.path, headers = {"Accept": "application/json"}, params = {"id": city_id, "units": API_INFO.unit, "appid": API_INFO.api_key})
 	data = response.json()
 	CACHE_DB.execute_command('JSON.SET', city_id, '.', json.dumps(data))
+	CACHE_DB.execute_command('EXPIRE', city_id, 30*60)
 	return data
 
 
