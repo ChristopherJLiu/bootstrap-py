@@ -26,6 +26,7 @@ Although the file app/init.dev.sh is included in the package, the docker compose
 
 
 So at the moment docker-compose should be turned down then turned up again to see changes of the code being executed.
+NOTE:No prints are being shown if want prints add "flush = true" to the prints
 
 
 
